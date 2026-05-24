@@ -13,7 +13,7 @@ class IntegrationExpirationRefreshScheduler(
     private val emailService: EmailService
 ) {
 
-    @Scheduled(cron = "0 53 11 * * ?", zone = "Africa/Johannesburg")
+    @Scheduled(cron = "0 0 0 * * ?", zone = "Africa/Johannesburg")
     fun runOncePerDay() {
         val updated = integrationService.refreshIntegration()
         for (integration in updated) {
