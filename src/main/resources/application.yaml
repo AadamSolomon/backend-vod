@@ -1,0 +1,38 @@
+server:
+  port: 8094
+
+near_expiration_days: 30 # x days inside window of expire date = near expiration
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/FREEPDB1
+    username: SYSTEM
+    password: cheese
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.OracleDialect
+
+  # change to vodacom email service (http post request)
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: aadamsolomon3@gmail.com
+    password: hmht rzlr snaz vsun
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+
+application:
+  client:
+    - login-name: Aadam
+      credentials: 0530ef4bb6bcf4abd0f066ca6fb381d3bc6c540d8687c9c9d6911b9387ab87b9 # use hash-password.sh to hash password
+      enabled: true
