@@ -39,18 +39,13 @@ class IntegrationService(
         integrationRepository.delete(integrationRepository.requireById(id))
     }
 
+    @Transactional(readOnly = true)
     fun metrics(): MetricIntegrationDto {
-        val integrations = integrationRepository.findAll()
-        var good = 0; var nearingExpiration = 0; var expired = 0
-        for (i in integrations) {
-            when (i.status) {
-                Status.GOOD -> good++
-                Status.NEARING_EXPIRATION -> nearingExpiration++
-                Status.EXPIRED -> expired++
-                null -> Unit
-            }
-        }
-        return MetricIntegrationDto(integrations.size, good, nearingExpiration, expired)
+        val total = integrationRepository.countAll()
+        val good = integrationRepository.countByStatus(Status.GOOD)
+        val nearingExpiration = integrationRepository.countByStatus(Status.NEARING_EXPIRATION)
+        val expired = integrationRepository.countByStatus(Status.EXPIRED)
+        return MetricIntegrationDto(total.toInt(), good.toInt(), nearingExpiration.toInt(), expired.toInt())
     }
 
     @Transactional(readOnly = true)

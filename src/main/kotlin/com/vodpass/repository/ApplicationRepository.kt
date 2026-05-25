@@ -1,6 +1,7 @@
 package com.vodpass.repository
 
 import com.vodpass.domain.entity.Application
+import com.vodpass.domain.entity.enums.Status
 import com.vodpass.exception.ResourceNotFoundException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -11,6 +12,12 @@ interface ApplicationRepository : JpaRepository<Application, Int> {
 
     fun requireById(id: Int): Application =
         findById(id).orElseThrow { ResourceNotFoundException("Application not found for id") }
+
+    @Query("SELECT COUNT(a) FROM Application a")
+    fun countAll(): Long
+
+    @Query("SELECT COUNT(DISTINCT a) FROM Application a JOIN a.integrations i WHERE i.status = :status")
+    fun countByIntegrationStatus(status: Status): Long
 
     @Query("""
         SELECT a FROM Application a

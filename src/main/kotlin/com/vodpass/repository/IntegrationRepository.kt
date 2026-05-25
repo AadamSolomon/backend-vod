@@ -14,6 +14,12 @@ interface IntegrationRepository : JpaRepository<Integration, Int> {
     fun requireById(id: Int): Integration =
         findById(id).orElseThrow { ResourceNotFoundException("Integration not found for id") }
 
+    @Query("SELECT COUNT(i) FROM Integration i WHERE i.status = :status")
+    fun countByStatus(status: Status): Long
+
+    @Query("SELECT COUNT(i) FROM Integration i")
+    fun countAll(): Long
+
     @Query("""
         SELECT i FROM Integration i
         WHERE (:id IS NULL OR i.id = :id)

@@ -29,17 +29,12 @@ class ApplicationService(
         return toDto(applicationRepository.save(application))
     }
 
+    @Transactional(readOnly = true)
     fun metrics(): MetricApplicationDto {
-        val all = applicationRepository.findAll()
-        var expired = 0
-        var nearingExpiration = 0
-        for (app in all) {
-            val hasExpired = app.integrations.any { it.status == Status.EXPIRED }
-            val hasNearing = app.integrations.any { it.status == Status.NEARING_EXPIRATION }
-            if (hasExpired) expired++
-            if (hasNearing) nearingExpiration++
-        }
-        return MetricApplicationDto(all.size, expired, nearingExpiration)
+        val total = applicationRepository.countAll()
+        val expired = applicationRepository.countByIntegrationStatus(Status.EXPIRED)
+        val nearingExpiration = applicationRepository.countByIntegrationStatus(Status.NEARING_EXPIRATION)
+        return MetricApplicationDto(total.toInt(), expired.toInt(), nearingExpiration.toInt())
     }
 
     @Transactional
