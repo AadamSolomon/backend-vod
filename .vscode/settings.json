@@ -1,0 +1,4 @@
+{
+  "java.compile.nullAnalysis.mode": "automatic",
+  "kotlin.diagnostics.enabled": false
+}
