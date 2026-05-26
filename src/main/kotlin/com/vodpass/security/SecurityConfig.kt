@@ -29,7 +29,6 @@ class SecurityConfig {
             .httpBasic(Customizer.withDefaults())
             .authorizeHttpRequests { auth ->
                 auth
-                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/health").permitAll()
                     .anyRequest().authenticated()
             }
@@ -41,7 +40,7 @@ class SecurityConfig {
         val config = CorsConfiguration().apply {
             allowedOriginPatterns = listOf("*")
             // allowedOrigins = listOf("http://localhost:5173") // frontend
-            allowedMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+            allowedMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE")
             allowedHeaders = listOf("*")
             allowCredentials = true
         }
