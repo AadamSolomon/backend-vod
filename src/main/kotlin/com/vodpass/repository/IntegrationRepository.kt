@@ -2,7 +2,6 @@ package com.vodpass.repository
 
 import com.vodpass.domain.entity.Integration
 import com.vodpass.domain.entity.enums.Status
-import com.vodpass.domain.entity.enums.SubType
 import com.vodpass.exception.ResourceNotFoundException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -38,7 +37,7 @@ interface IntegrationRepository : JpaRepository<Integration, Int> {
         status: Status?,
         username: String?,
         age: Int?,
-        subType: SubType?,
+        subType: String?,
         applicationId: Int?,
         pageable: Pageable
     ): Page<Integration>

@@ -1,7 +1,6 @@
 package com.vodpass.domain.dto
 
 import com.vodpass.domain.entity.enums.Status
-import com.vodpass.domain.entity.enums.SubType
 import java.time.LocalDateTime
 
 data class IntegrationDto(
@@ -12,5 +11,5 @@ data class IntegrationDto(
     val status: Status?,
     val username: String,
     val age: Int?,
-    val subType: SubType?
+    val subType: String?
 )

@@ -1,9 +1,7 @@
 package com.vodpass.domain.entity
 
 import com.vodpass.domain.entity.enums.Status
-import com.vodpass.domain.entity.enums.SubType
 import jakarta.persistence.Column
-import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
@@ -45,9 +43,8 @@ class Integration {
     @Column(name = "age")
     var age: Int? = null
 
-    @Convert(converter = SubType.JpaConverter::class)
     @Column(name = "sub_type", nullable = false)
-    var subType: SubType? = null
+    var subType: String? = null
 
     @ManyToMany(mappedBy = "integrations")
     var applications: MutableList<Application> = mutableListOf()

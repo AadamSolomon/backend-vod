@@ -5,7 +5,6 @@ import com.vodpass.domain.dto.MetricIntegrationDto
 import com.vodpass.domain.dto.PagedResult
 import com.vodpass.domain.entity.Integration
 import com.vodpass.domain.entity.enums.Status
-import com.vodpass.domain.entity.enums.SubType
 import com.vodpass.domain.requests.EnsureIntegrationRequest
 import com.vodpass.repository.IntegrationRepository
 import org.springframework.beans.factory.annotation.Value
@@ -29,7 +28,7 @@ class IntegrationService(
         integration.version = request.version
         integration.account = request.account
         integration.username = request.username
-        integration.subType = SubType.parseSubTypeRequired(request.subType)
+        integration.subType = request.subType
         Status.recomputeExpirationDerivedFields(integration, now, nearExpirationDays)
         return toDto(integrationRepository.save(integration))
     }
@@ -54,7 +53,7 @@ class IntegrationService(
         username: String?, age: Int?, subType: String?, applicationId: Int?, pageable: Pageable
     ): PagedResult<IntegrationDto> =
         PagedResult.from(
-            integrationRepository.searchPage(id, version, account, status, username, age, SubType.parseSubTypeFilter(subType), applicationId, pageable)
+            integrationRepository.searchPage(id, version, account, status, username, age, subType, applicationId, pageable)
                 .map(::toDto)
         )
 
