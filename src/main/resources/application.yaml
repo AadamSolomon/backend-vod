@@ -31,7 +31,6 @@ spring:
           starttls:
             enable: true
 
-# Authorization: "basic base64(username:password)"
 application:
   client:
     - login-name: Aadam
