@@ -13,13 +13,6 @@ interface ApplicationRepository : JpaRepository<Application, Int> {
     fun requireById(id: Int): Application =
         findById(id).orElseThrow { ResourceNotFoundException("Application not found for id") }
 
-    @Query("""
-        SELECT a FROM Application a
-        LEFT JOIN FETCH a.integrations
-        WHERE a.id = :id
-    """)
-    fun findByIdWithIntegrations(id: Int): Application?
-
     @Query("SELECT COUNT(a) FROM Application a")
     fun countAll(): Long
 
