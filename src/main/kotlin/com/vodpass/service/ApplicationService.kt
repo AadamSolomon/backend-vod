@@ -39,7 +39,15 @@ class ApplicationService(
 
     @Transactional
     fun deleteById(id: Int) {
-        applicationRepository.delete(applicationRepository.requireById(id))
+
+        val application = applicationRepository.findByIdWithIntegrations(id)
+            ?: throw ResourceNotFoundException("Application not found for id")
+
+        if (application.integrations.isNotEmpty()) {
+            throw BadRequestException("Cannot delete Application with linked Integrations")
+        }
+
+        applicationRepository.delete(application)
     }
 
     @Transactional(readOnly = true)
